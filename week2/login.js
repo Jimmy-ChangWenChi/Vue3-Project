@@ -1,14 +1,14 @@
-import {createApp} from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+import { createApp } from "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.26/vue.esm-browser.min.js";
 
-const user = {
-    username:"",
-    password:""
-}
 
 createApp({
     data(){
         return {
-            user
+            user: {
+                username:"",
+                password:""
+            },
+            test:"test"
         }
     },
     methods: {
@@ -17,9 +17,10 @@ createApp({
 
             axios.post(apiPath,this.user)
             .then((res) => {
-                console.log(this.user);
-                const {token,expired} = res.data;
-                document.cookie = `hexToken${token};expires=${new Date(expired)}; path=/`;
+                console.log("success");
+                const { token,expired } = res.data;
+                console.log(token, expired);
+                document.cookie = `JimmyToken=${token};expires=${new Date(expired)}; `;
                 window.location = `products.html`;
             })
             .catch((err)=>{
