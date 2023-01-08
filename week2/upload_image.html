@@ -17,6 +17,7 @@
         id="file"
         placeholder="請輸入圖片連結"
         />
+        <button type="button" id="changePage">回到產品畫面</button>
     </div>
     <script>
         const url = "https://vue3-course-api.hexschool.io/v2";
@@ -25,6 +26,9 @@
 
         const fileInput = document.querySelector("#file");
         fileInput.addEventListener("change",upload);
+
+        const pages = document.querySelector("#changePage");
+        pages.addEventListener("click",goProductPage);
 
         function upload(){
             
@@ -49,6 +53,10 @@
             .catch((err)=>{
                 console.log(err.response);
             })
+        }
+        function goProductPage(){
+            console.log("success");
+            window.location = `products.html`;
         }
 
     </script>
