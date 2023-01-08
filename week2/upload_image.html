@@ -27,7 +27,9 @@
         fileInput.addEventListener("change",upload);
 
         function upload(){
-            const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+            
+            const token = document.cookie.replace(/(?:(?:^|.*;\s*)JimmyToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+            //console.log(token);
             axios.defaults.headers.common['Authorization'] = token;
             
             console.dir(fileInput); //會在file的屬性下 
@@ -41,6 +43,8 @@
             axios.post(`${url}/api/${path}/admin/upload`, formData)
             .then((res) =>{
                 console.log(res);
+                window.location = `products.html`;
+                //console.log(res.data.imageUrl);
             })
             .catch((err)=>{
                 console.log(err.response);

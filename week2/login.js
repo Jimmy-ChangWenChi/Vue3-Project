@@ -20,7 +20,7 @@ createApp({
                 console.log("success");
                 const { token,expired } = res.data;
                 console.log(token, expired);
-                document.cookie = `JimmyToken=${token};expires=${new Date(expired)}; `;
+                document.cookie = `JimmyToken=${token};expired=${new Date(expired)}; `;
                 window.location = `products.html`;
             })
             .catch((err)=>{
