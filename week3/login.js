@@ -17,9 +17,9 @@ createApp({
 
             axios.post(apiPath,this.user)
             .then((res) => {
-                console.log("success");
+                
                 const { token,expired } = res.data;
-                console.log(token, expired);
+                
                 document.cookie = `JimmyToken=${token};expired=${new Date(expired)}; `;
                 window.location = `upload_image.html`;
             })
