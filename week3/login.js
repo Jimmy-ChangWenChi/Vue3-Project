@@ -21,7 +21,7 @@ createApp({
                 const { token,expired } = res.data;
                 
                 document.cookie = `JimmyToken=${token};expired=${new Date(expired)}; `;
-                window.location = `upload_image.html`;
+                window.location = `products.html`;
             })
             .catch((err)=>{
                 alert(err.response.data.message);

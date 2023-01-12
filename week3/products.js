@@ -1,12 +1,14 @@
 import {createApp} from "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.26/vue.esm-browser.min.js";
 
+let productModal = null;
 const app = {
     data(){
         return {
             apiUrl:"https://vue3-course-api.hexschool.io/v2",
             path:"jimmychang",
             products:[],
-            tempProduct:{}
+            tempProduct:{},
+            value:"有顯示"
         }
     },
     methods:{
@@ -30,16 +32,26 @@ const app = {
             .catch((err)=>{
                 alert(err.response.data.message);
             })
+        },
+        openModal(){
+            console.log("test");
+            productModal.show();
         }
+        
 
     },
     mounted(){
         const token = document.cookie.replace(/(?:(?:^|.*;\s*)JimmyToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
         axios.defaults.headers.common.Authorization = token;
 
-        const productModal = document.getElementById("#productModal");
+        //productModal = document.getElementById("#productModal");
         
-
+        productModal = new bootstrap.Modal(document.getElementById("productModal"),{
+            keyboard: false
+        });
+        
+        this.checkAdmin();
+        
     }
 }
 
