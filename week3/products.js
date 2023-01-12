@@ -1,6 +1,7 @@
 import {createApp} from "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.26/vue.esm-browser.min.js";
 
 let productModal = null;
+let delProductModal = null;
 const app = {
     data(){
         return {
@@ -8,6 +9,7 @@ const app = {
             path:"jimmychang",
             products:[],
             tempProduct:{},
+            isNew:true,
             value:"有顯示"
         }
     },
@@ -33,12 +35,19 @@ const app = {
                 alert(err.response.data.message);
             })
         },
-        openModal(){
-            console.log("test");
+        addModal(){
+            this.isNew = true;
+            productModal.show();
+        },
+        delModal(){
+            delProductModal.show();
+        },
+        editModal(item){
+            this.tempProduct = {...item};
+            this.isNew = false;
             productModal.show();
         }
         
-
     },
     mounted(){
         const token = document.cookie.replace(/(?:(?:^|.*;\s*)JimmyToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
@@ -49,6 +58,9 @@ const app = {
         productModal = new bootstrap.Modal(document.getElementById("productModal"),{
             keyboard: false
         });
+        delProductModal = new bootstrap.Modal(document.getElementById("delProductModal",{
+            keyboard:false
+        }))
         
         this.checkAdmin();
         
