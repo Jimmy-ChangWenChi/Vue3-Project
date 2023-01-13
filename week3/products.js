@@ -29,6 +29,7 @@ const app = {
             const url = `${this.apiUrl}/api/${this.path}/products/all`;
             axios.get(url)
             .then((res) =>{
+                console.log(res.data.products);
                 this.products = res.data.products;
             })
             .catch((err)=>{
@@ -37,6 +38,9 @@ const app = {
         },
         addModal(){
             this.isNew = true;
+            this.tempProduct = {
+                imageUrl:[]
+            }
             productModal.show();
         },
         delModal(){
@@ -46,6 +50,45 @@ const app = {
             this.tempProduct = {...item};
             this.isNew = false;
             productModal.show();
+        },
+        createImage(){
+            this.tempProduct.imagesUrl = [];
+            this.tempProduct.imagesUrl.push('');
+        },
+        updateProduct(){
+            let url ="";
+            let way ="";
+            if(!this.isNew){
+                url = `${this.apiUrl}/api/${this.path}/admin/product/${this.tempProduct.id}`;
+                way = "put";
+            }else{
+                url = `${this.apiUrl}/api/${this.path}/admin/product`;
+                way = "post";
+            }
+            console.log(this.tempProduct);
+            console.log(this.isNew);
+            axios[way](url, {data: this.tempProduct})
+            .then((res) =>{
+                alert("Success");
+                productModal.hide();
+                this.getData();
+            })
+            .catch((err) =>{
+                alert(err.response.data.message);
+            })
+        },
+        deleteProduct(){
+            const url = `${this.apiUrl}/api/${this.path}/admin/product/${this.tempProduct.id}`;
+
+            axios.delete(url,{data: this.tempProduct})
+            .then((res) =>{
+                alert("Delete Success");
+                delProductModal.hide();
+                this.getData();
+            })
+            .catch((err) =>{
+                alert(err.response.data.message);
+            })
         }
         
     },

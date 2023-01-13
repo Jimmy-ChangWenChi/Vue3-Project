@@ -46,8 +46,9 @@
 
             axios.post(`${url}/api/${path}/admin/upload`, formData)
             .then((res) =>{
-                console.log(res);
-                window.location = `products.html`;
+                console.log(res.data.imageUrl);
+                //console.log(res);
+                //window.location = `products.html`;
                 //console.log(res.data.imageUrl);
             })
             .catch((err)=>{
