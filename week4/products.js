@@ -1,4 +1,5 @@
 import {createApp} from "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.26/vue.esm-browser.min.js";
+import pagination from "./pagination.js"
 
 let productModal = null;
 let delProductModal = null;
@@ -26,11 +27,14 @@ const app = {
             })
         },
         getData(){
-            const url = `${this.apiUrl}/api/${this.path}/products/all`;
+            //const url = `${this.apiUrl}/api/${this.path}/products/all`;
+            
+            const url = `${this.apiUrl}/api/${this.path}/products/?pages=1`
             axios.get(url)
             .then((res) =>{
                 console.log(res.data.products);
                 this.products = res.data.products;
+                console.log(res.data);
             })
             .catch((err)=>{
                 alert(err.response.data.message);
@@ -107,6 +111,10 @@ const app = {
         
         this.checkAdmin();
         
+    },
+    components:{
+        pagination,
+
     }
 }
 
