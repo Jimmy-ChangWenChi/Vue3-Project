@@ -26,10 +26,11 @@ const app = {
             })
         },
         getData(){
-            const url = `${this.apiUrl}/api/${this.path}/products/all`;
+            //const url = `${this.apiUrl}/api/${this.path}/products/all`; //取得前台資料
+            const url = `${this.apiUrl}/api/${this.path}/admin/products/all`; //取得後台所有資料
+            
             axios.get(url)
             .then((res) =>{
-                console.log(res.data.products);
                 this.products = res.data.products;
             })
             .catch((err)=>{
@@ -43,7 +44,8 @@ const app = {
             }
             productModal.show();
         },
-        delModal(){
+        delModal(item){
+            this.tempProduct = {...item};
             delProductModal.show();
         },
         editModal(item){
@@ -65,8 +67,6 @@ const app = {
                 url = `${this.apiUrl}/api/${this.path}/admin/product`;
                 way = "post";
             }
-            console.log(this.tempProduct);
-            console.log(this.isNew);
             axios[way](url, {data: this.tempProduct})
             .then((res) =>{
                 alert("Success");
@@ -79,8 +79,8 @@ const app = {
         },
         deleteProduct(){
             const url = `${this.apiUrl}/api/${this.path}/admin/product/${this.tempProduct.id}`;
-
-            axios.delete(url,{data: this.tempProduct})
+            
+            axios.delete(url, this.tempProduct.id)
             .then((res) =>{
                 alert("Delete Success");
                 delProductModal.hide();
@@ -95,8 +95,6 @@ const app = {
     mounted(){
         const token = document.cookie.replace(/(?:(?:^|.*;\s*)JimmyToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
         axios.defaults.headers.common.Authorization = token;
-
-        //productModal = document.getElementById("#productModal");
         
         productModal = new bootstrap.Modal(document.getElementById("productModal"),{
             keyboard: false
