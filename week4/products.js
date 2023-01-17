@@ -32,9 +32,7 @@ const app = {
             const url = `${this.apiUrl}/api/${this.path}/products/?pages=1`
             axios.get(url)
             .then((res) =>{
-                console.log(res.data.products);
                 this.products = res.data.products;
-                console.log(res.data);
             })
             .catch((err)=>{
                 alert(err.response.data.message);
@@ -48,6 +46,7 @@ const app = {
             productModal.show();
         },
         delModal(){
+            this.tempProduct = {...item};
             delProductModal.show();
         },
         editModal(item){
@@ -69,8 +68,6 @@ const app = {
                 url = `${this.apiUrl}/api/${this.path}/admin/product`;
                 way = "post";
             }
-            console.log(this.tempProduct);
-            console.log(this.isNew);
             axios[way](url, {data: this.tempProduct})
             .then((res) =>{
                 alert("Success");
