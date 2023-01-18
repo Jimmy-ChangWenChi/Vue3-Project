@@ -11,7 +11,8 @@ const app = {
             products:[],
             tempProduct:{},
             isNew:true,
-            value:"有顯示"
+            value:"有顯示",
+            page: {}
         }
     },
     methods:{
@@ -26,12 +27,14 @@ const app = {
                 window.location = 'login.html';
             })
         },
-        getData(){
+        getData(page=1){
             //const url = `${this.apiUrl}/api/${this.path}/products/all`;
             
-            const url = `${this.apiUrl}/api/${this.path}/products/?pages=1`
+            const url = `${this.apiUrl}/api/${this.path}/admin/products/?page=${page}`
             axios.get(url)
             .then((res) =>{
+                console.log(res.data)
+                this.page = res.data.pagination;
                 this.products = res.data.products;
             })
             .catch((err)=>{
