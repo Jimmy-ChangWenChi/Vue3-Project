@@ -77,13 +77,17 @@
           </tr>
         </tbody>
       </table>
-      <pagination :pages="page" :get-data ="getData"></pagination>
+
+      <!-- <pagination :pages="page" :get-data ="getData"></pagination> -->
+      <!-- emit寫法 -->
+      
+    <pagination :pages="page" @change-page="getData"></pagination>
     </div>
     
     <!-- Modal -->
     <div id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
          aria-hidden="true">
-      <div class="modal-dialog modal-xl">
+      <!-- <div class="modal-dialog modal-xl">
         <div class="modal-content border-0">
           <div class="modal-header bg-dark text-white">
             <h5 id="productModalLabel" class="modal-title">
@@ -194,7 +198,12 @@
             </button>
           </div>
         </div>
-      </div>
+      </div> -->
+      <products-modal :temp-product="tempProduct"
+      :is-new="isNew"
+      :create-image="createImage"
+      :update-product="updateProduct"
+      ></products-modal>
     </div>
     <div id="delProductModal" ref="delProductModal" class="modal fade" tabindex="-1"
          aria-labelledby="delProductModalLabel" aria-hidden="true">

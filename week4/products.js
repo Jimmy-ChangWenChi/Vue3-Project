@@ -1,5 +1,6 @@
 import {createApp} from "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.26/vue.esm-browser.min.js";
 import pagination from "./pagination.js"
+import productsModal from "./productsModal.js"
 
 let productModal = null;
 let delProductModal = null;
@@ -33,7 +34,7 @@ const app = {
             const url = `${this.apiUrl}/api/${this.path}/admin/products/?page=${page}`
             axios.get(url)
             .then((res) =>{
-                console.log(res.data)
+                //console.log(res.data)
                 this.page = res.data.pagination;
                 this.products = res.data.products;
             })
@@ -112,8 +113,10 @@ const app = {
         this.checkAdmin();
         
     },
+    //區域註冊寫法, 只能綁定一個實體
     components:{
         pagination,
+        productsModal
 
     }
 }
