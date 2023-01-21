@@ -1,6 +1,6 @@
 import {createApp} from "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.26/vue.esm-browser.min.js";
-import pagination from "./pagination.js"
-import productsModal from "./productsModal.js"
+import pagination from "./components/pagination.js"
+import productsModal from "./components/productsModal.js"
 
 let productModal = null;
 let delProductModal = null;
@@ -49,7 +49,7 @@ const app = {
             }
             productModal.show();
         },
-        delModal(){
+        delModal(item){
             this.tempProduct = {...item};
             delProductModal.show();
         },
@@ -85,7 +85,7 @@ const app = {
         deleteProduct(){
             const url = `${this.apiUrl}/api/${this.path}/admin/product/${this.tempProduct.id}`;
 
-            axios.delete(url,{data: this.tempProduct})
+            axios.delete(url,this.tempProduct.id)
             .then((res) =>{
                 alert("Delete Success");
                 delProductModal.hide();
