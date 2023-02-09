@@ -7,6 +7,8 @@ createApp({
             products:[],
             apiUrl:"https://vue3-course-api.hexschool.io/v2",
             path:"jimmychang",
+            productId:"",
+            cart:{},
 
         }
     },
@@ -21,11 +23,78 @@ createApp({
             .catch((err)=>{
                 alert(err.response.data.message);
             })
-        }
+        },
+        openModal(id){
+            this.productId = id;
+            console.log("openModal");
+        },
+        addToCar(product_id,qty = 1){
+            const data = {
+                product_id,
+                qty
+            }
+            console.log("addToCar");
+            const url = `${this.apiUrl}/api/${this.path}/cart`;
+            axios.post(url,{data})
+            .then((res) =>{
+                alert("產品加入成功");
+                this.$refs.productModal.hide();
+                this.getCar();
+            })
+            .catch((err) => {
+                alert("產品加入失敗");
+            })
+        },
+        getCar(){
+            const url = `${this.apiUrl}/api/${this.path}/cart`;
+            axios.get(url)
+            .then((res)=>{
+                this.cart = res.data.data;
+                //console.log(this.cart)
+            })
+            .catch((err)=>{
+                alert("購物車失敗");
+            })
+        },
+        updateCarItem(item){
+            console.log("update")
+            const data = {
+                product_id:item.product.id,
+                qty:item.qty
+            }
+            const url = `${this.apiUrl}/api/${this.path}/cart/${item.id}`; 
+            axios.put(url,{data})
+            .then((res) =>{
+                alert("更新成功");
+                this.getCar();
+            })
+            .catch((err)=>{
+                alert("更新失敗");
+            })
+        },
+        deleteCarItem(item){
+            console.log(item);
+            let url="";
+            if (item.id){
+                url = `${this.apiUrl}/api/${this.path}/cart/${item.id}`; 
+            } else{
+                url = `${this.apiUrl}/api/${this.path}/carts`; 
+            }
+            console.log(url);
+            axios.delete(url)
+            .then((res)=> {
+                alert("刪除成功");
+                this.getCar();
+            })
+            .catch((err)=> {
+
+            })
+        },
 
     },
     mounted(){
         this.getProducts();
+        this.getCar();
     },
     components:{
         productsModal,
