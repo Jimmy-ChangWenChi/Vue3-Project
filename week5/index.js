@@ -1,5 +1,22 @@
 import { createApp } from "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.26/vue.esm-browser.min.js";
-import productsModal from "./components/productsModal.js"
+import productsModal from "./components/productsModal.js";
+const {defineRule, Form, Field, ErrorMessage,configure } = VeeValidate;
+const {required,email } = VeeValidateRules;
+const { localize, loadLocaleFromURL} = VeeValidateI18n;
+
+
+defineRule('require',required);
+defineRule('email',email);
+
+// 讀取外部的資源
+loadLocaleFromURL("./zh_TW.json");
+
+// Activate the locale
+configure({
+  generateMessage: localize('zh_TW'),
+  validateOnInput: true, // 調整為：輸入文字時，就立即進行驗證
+});
+
 
 createApp({
     data(){
@@ -9,7 +26,13 @@ createApp({
             path:"jimmychang",
             productId:"",
             cart:{},
-
+            user:{
+                email:"",
+                name:"",
+                phone:"",
+                address:"",
+                content:""
+            },
         }
     },
     methods:{
@@ -17,7 +40,7 @@ createApp({
             const url = `${this.apiUrl}/api/${this.path}/products/all`;
             axios.get(url)
             .then((res)=>{
-                console.log(res.data);
+                //console.log(res.data);
                 this.products = res.data.products;
             })
             .catch((err)=>{
@@ -87,10 +110,12 @@ createApp({
                 this.getCar();
             })
             .catch((err)=> {
-
+                alert("刪除失敗");
             })
         },
-
+        onSubmit(){
+            console.log("submit");
+        },
     },
     mounted(){
         this.getProducts();
@@ -98,5 +123,8 @@ createApp({
     },
     components:{
         productsModal,
-    }
+        VForm:Form,
+        VField:Field,
+        ErrorMessage: ErrorMessage,
+    },
 }).mount("#app");
