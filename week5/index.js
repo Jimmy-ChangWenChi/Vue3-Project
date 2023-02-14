@@ -1,4 +1,4 @@
-import { createApp } from "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.26/vue.esm-browser.min.js";
+//import { createApp } from "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.26/vue.esm-browser.min.js";
 import productsModal from "./components/productsModal.js";
 const {defineRule, Form, Field, ErrorMessage,configure } = VeeValidate;
 const {required,email } = VeeValidateRules;
@@ -18,7 +18,7 @@ configure({
 });
 
 
-createApp({
+Vue.createApp({
     data(){
         return {
             products:[],
