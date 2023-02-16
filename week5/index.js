@@ -5,7 +5,7 @@ const {required,email } = VeeValidateRules;
 const { localize, loadLocaleFromURL} = VeeValidateI18n;
 
 
-defineRule('require',required);
+defineRule('required',required);
 defineRule('email',email);
 
 // 讀取外部的資源
@@ -26,13 +26,25 @@ Vue.createApp({
             path:"jimmychang",
             productId:"",
             cart:{},
-            user:{
+            order:{
+                user:{
                 email:"",
                 name:"",
-                phone:"",
+                tel:"",
                 address:"",
-                content:""
+                },
+                message:""
             },
+            resetData:{
+                user:{
+                email:"",
+                name:"",
+                tel:"",
+                address:"",
+                },
+                message:""
+            },
+            
         }
     },
     methods:{
@@ -96,14 +108,12 @@ Vue.createApp({
             })
         },
         deleteCarItem(item){
-            console.log(item);
             let url="";
             if (item.id){
                 url = `${this.apiUrl}/api/${this.path}/cart/${item.id}`; 
             } else{
                 url = `${this.apiUrl}/api/${this.path}/carts`; 
             }
-            console.log(url);
             axios.delete(url)
             .then((res)=> {
                 alert("刪除成功");
@@ -114,7 +124,18 @@ Vue.createApp({
             })
         },
         onSubmit(){
-            console.log("submit");
+            const url = `${this.apiUrl}/api/${this.path}/order`;
+            axios.post(url,{ data: this.order})
+            .then((res) =>{
+                alert("結帳成功");
+                this.getCar();
+                //this.$refs.form.resetForm();
+                this.order = this.resetData;
+                console.log(this.order);
+            })
+            .catch((err) =>{
+                alert("結帳失敗");
+            })
         },
     },
     mounted(){
