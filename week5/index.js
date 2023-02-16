@@ -61,14 +61,14 @@ Vue.createApp({
         },
         openModal(id){
             this.productId = id;
-            console.log("openModal");
+            
         },
         addToCar(product_id,qty = 1){
             const data = {
                 product_id,
                 qty
             }
-            console.log("addToCar");
+            
             const url = `${this.apiUrl}/api/${this.path}/cart`;
             axios.post(url,{data})
             .then((res) =>{
@@ -92,7 +92,7 @@ Vue.createApp({
             })
         },
         updateCarItem(item){
-            console.log("update")
+            
             const data = {
                 product_id:item.product.id,
                 qty:item.qty
@@ -131,7 +131,6 @@ Vue.createApp({
                 this.getCar();
                 //this.$refs.form.resetForm();
                 this.order = this.resetData;
-                console.log(this.order);
             })
             .catch((err) =>{
                 alert("結帳失敗");
